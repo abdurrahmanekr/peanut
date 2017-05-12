@@ -10,10 +10,22 @@ import {
 	Alert
 } from 'react-native';
 
+import {
+	Actions,
+	Scene,
+	Router
+} from 'react-native-router-flux';
+
 import XMPP from 'stanza.io';
 
+import {
+	Start,
+	Login,
+	Main
+} from '@peanut/pages';
+
 export default class Peanut extends Component {
-	
+
 	constructor(props) {
 		super(props);
 		this.connectServer(); // uygulama başlayınca otomatik çalıştırıyorum
@@ -56,8 +68,17 @@ export default class Peanut extends Component {
 	}
 
 	render() {
+		const scenes = Actions.create(
+			<Scene key="root">
+				<Scene key="Start" component={Start} title="Start" hideNavBar={true}/>
+				<Scene key="Main" component={Main} title="Main" />
+				<Scene key="Login" component={Login} title="Login" />
+			</Scene>
+		);
+
 		return (
-			<View></View>
+			<Router
+				scenes={scenes}/>
 		);
 	}
 }
