@@ -3,5 +3,4 @@ npm install react-native-browser-builtins --save &&
 npm install rn-nodeify --save-dev &&
 ./node_modules/.bin/rn-nodeify --install --hack &&
 npm i &&
-cd ../.. &&
-react-native link
+cd ../..

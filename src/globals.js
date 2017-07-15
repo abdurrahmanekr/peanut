@@ -18,4 +18,6 @@ if (typeof document === 'undefined') {
 	global.document = window.document;
 }
 process.browser = false
-if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
+if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer;
+
+global.XMLHttpRequest = global.originalXMLHttpRequest || global.XMLHttpRequest;
