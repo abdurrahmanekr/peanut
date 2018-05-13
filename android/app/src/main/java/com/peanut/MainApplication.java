@@ -27,6 +27,11 @@ public class MainApplication extends Application implements ReactApplication {
             new RandomBytesPackage()
       );
     }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
+    }
   };
 
   @Override
