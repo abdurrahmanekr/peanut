@@ -1,37 +1,40 @@
-/**
- * @providesModule @peanut/index
- */
-
 import React, { Component } from 'react';
 import {
 	AppRegistry,
 	StyleSheet,
 	View,
-	Alert
+	Text,
+	Alert,
 } from 'react-native';
 
-import {
-	Actions,
-	Scene,
-	Router
-} from 'react-native-router-flux';
+import './init';
 
 import XMPP from 'stanza.io';
-
-import {
-	Start,
-	Login,
-	Main
-} from '@peanut/pages';
 
 export default class Peanut extends Component {
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			logs: []
+		};
+
+		this.connectServer = this.connectServer.bind(this);
+		this.addLog = this.addLog.bind(this);
+	}
+
+	componentWillMount() {
 		this.connectServer(); // uygulama başlayınca otomatik çalıştırıyorum
 	}
 
-	async connectServer() {
+	addLog(log) {
+		this.state.logs.push(String(log));
+		this.setState({logs: this.state.logs});
+	}
+
+	connectServer() {
+		var self = this;
 		/*
 		 * @jid: jid'miz
 		 * @password: şifremiz
@@ -50,17 +53,19 @@ export default class Peanut extends Component {
 		// oturumumuz başladı
 		client.on('session:started', () => {
 			// ekrana mesaj verdik
-			Alert.alert('Oturum açtın!!!');
+			self.addLog('Oturum başladı');
 		});
 
 		// mesaj geldiğinde
 		client.on('message', msg => {
 			console.log(msg);
+			self.addLog(msg.toString());
 		});
 
 		// bağlanılamadığında veya bağlantı koptuğunda
 		client.on('disconnected', xml => {
 			console.log(xml);
+			self.addLog('Bağlantınız Koptu');
 		});
 
 		// bağlantı isteği at
@@ -68,17 +73,18 @@ export default class Peanut extends Component {
 	}
 
 	render() {
-		const scenes = Actions.create(
-			<Scene key="root">
-				<Scene key="Start" component={Start} title="Start" hideNavBar={true}/>
-				<Scene key="Main" component={Main} title="Main" />
-				<Scene key="Login" component={Login} title="Login" />
-			</Scene>
-		);
-
-		return (
-			<Router
-				scenes={scenes}/>
+		return(
+			<View style={{marginTop: 50}}>
+				<Text style={{borderBottomWidth: 1, borderBottomColor: '#ccc'}}>Tüm logları aşağıdan takip edebilirsiniz</Text>
+				{
+					this.state.logs.map((x, i) => (
+						<Text
+							key={i}>
+							{x}
+						</Text>
+					))
+				}
+			</View>
 		);
 	}
 }

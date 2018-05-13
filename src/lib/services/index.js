@@ -1,4 +1,0 @@
-/**
- * @providesModule @peanut/services
- */
-
