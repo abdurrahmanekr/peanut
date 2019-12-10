@@ -24,7 +24,7 @@ export default class Peanut extends Component {
 		this.addLog = this.addLog.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.connectServer(); // uygulama başlayınca otomatik çalıştırıyorum
 	}
 
@@ -47,7 +47,7 @@ export default class Peanut extends Component {
 			password: '1234',
 			sasl: "plain",
 			transport: 'bosh',
-			boshURL: 'http://192.168.1.102:7070/http-bind/'
+			boshURL: 'http://192.168.1.101:7070/http-bind/'
 		});
 
 		// oturumumuz başladı
